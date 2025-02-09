@@ -14,16 +14,12 @@ public class ActiveScheduler {
     private RestTemplate restTemplate;
     @Value("${app.url}")
     private String url;
-    @Value("${redis.url}")
-    private String redisUrl;
 
     @Scheduled(fixedRate = 10 * 60 * 1000, zone = "UTC") // 10 minutes
     public void handleActive() {
         try {
             restTemplate.getForEntity(url, String.class);
-            restTemplate.getForEntity(redisUrl, String.class);
         } catch (Exception ignored) {}
         log.error("GET request sent to {}", url);
-        log.warn("GET request sent to REDIS_URL {}", redisUrl);
     }
 }
