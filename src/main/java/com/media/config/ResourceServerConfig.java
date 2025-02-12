@@ -40,7 +40,7 @@ public class ResourceServerConfig extends ResourceServerConfigurerAdapter {
         http.requestMatchers()
                 .and()
                 .authorizeRequests()
-                .antMatchers("/v2/api-docs", "/v1/file/download/**").permitAll()
+                .antMatchers("/v2/api-docs", "/v1/file/download/**", "/v1/file/upload-base64").permitAll()
                 .antMatchers("/**").authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and().exceptionHandling().accessDeniedHandler(new OAuth2AccessDeniedHandler());

@@ -5,6 +5,7 @@ import com.media.dto.UploadFileDto;
 import com.media.form.DeleteListFileForm;
 import com.media.form.UploadBase64Form;
 import com.media.form.UploadFileForm;
+import com.media.service.HttpService;
 import com.media.service.MediaApiService;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
@@ -32,6 +33,8 @@ import java.util.concurrent.TimeUnit;
 public class FileController extends ABasicController {
     @Autowired
     MediaApiService mediaApiService;
+    @Autowired
+    private HttpService httpService;
 
     @PostMapping(value = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ApiMessageDto<UploadFileDto> upload(@Valid UploadFileForm uploadFileForm, BindingResult bindingResult) {
@@ -43,7 +46,8 @@ public class FileController extends ABasicController {
     }
 
     @PostMapping(value = "/upload-base64", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ApiMessageDto<UploadFileDto> uploadForBase64(@Valid @RequestBody UploadBase64Form uploadBase64Form, BindingResult bindingResult) {
+    public ApiMessageDto<UploadFileDto> uploadForBase64(HttpServletRequest request, @Valid @RequestBody UploadBase64Form uploadBase64Form, BindingResult bindingResult) {
+        httpService.validateInternalRequest(request);
         String tenantId = userService.tenantId.get();
         if (StringUtils.isBlank(tenantId)) {
             return mediaApiService.storeFileByBase64(uploadBase64Form, null);

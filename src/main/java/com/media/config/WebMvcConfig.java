@@ -94,7 +94,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         config.setAllowedOrigins(Collections.singletonList("*"));
         config.setAllowedHeaders(Arrays.asList(
                 "Accept", "Origin", "Content-Type", "Depth", "User-Agent", "If-Modified-Since,",
-                "Cache-Control", "Authorization", "X-Req", "X-File-Size", "X-Requested-With", "X-File-Name", "Content-Disposition", "X-tenant"));//Arrays.asList("Origin", "Content-Type", "Accept")
+                "Cache-Control", "Authorization", "X-Req", "X-File-Size", "X-Requested-With", "X-File-Name", "Content-Disposition", "X-tenant", "X-Api-Key"));//Arrays.asList("Origin", "Content-Type", "Accept")
         config.setAllowedMethods(Arrays.asList("HEAD", "GET", "POST", "PUT", "OPTIONS", "DELETE", "PATCH"));
         config.setExposedHeaders(Arrays.asList("Origin", "X-Requested-With", "Content-Type", "Accept", "Authorization", "Content-Disposition"));
         source.registerCorsConfiguration("/**", config);

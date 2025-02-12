@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
 import org.springframework.stereotype.Service;
-import org.springframework.util.FileCopyUtils;
 import org.springframework.util.StringUtils;
 
 import java.io.*;
@@ -105,11 +104,12 @@ public class MediaApiService {
             boolean contains = Arrays.stream(UPLOAD_TYPES).anyMatch(uploadBase64Form.getType()::equalsIgnoreCase);
             if (!contains) {
                 apiMessageDto.setResult(false);
-                apiMessageDto.setMessage("Type is required in AVATAR or LOGO");
+                apiMessageDto.setCode("ERROR-UPLOAD-TYPE-INVALID");
+                apiMessageDto.setMessage("Type is required in AVATAR or LOGO or IMAGE or VIDEO or DOCUMENT");
                 return apiMessageDto;
             }
 
-            String ext = "png";
+            String ext = uploadBase64Form.getExt();
             String finalFile = uploadBase64Form.getType() + "_"
                     + RandomStringUtils.randomAlphanumeric(10) + "." + ext;
 
@@ -127,8 +127,10 @@ public class MediaApiService {
             }
 
             Files.createDirectories(fileStorageLocation);
-            String encryptedContent = AESUtils.encrypt(secretKey, uploadBase64Form.getBase64Image(), true);
-            convertBase64ToImage(encryptedContent, fileStorageLocation + File.separator + finalFile);
+            Path targetLocation = fileStorageLocation.resolve(finalFile);
+
+            String encryptedContent = AESUtils.encrypt(secretKey, uploadBase64Form.getBase64(), true);
+            Files.write(targetLocation, Base64.getDecoder().decode(encryptedContent));
 
             UploadFileDto uploadFileDto = new UploadFileDto();
             uploadFileDto.setFilePath(tenantFolder + typeFolder + File.separator + finalFile);
@@ -141,20 +143,6 @@ public class MediaApiService {
             apiMessageDto.setMessage(e.getMessage());
         }
         return apiMessageDto;
-    }
-
-    public void convertBase64ToImage(String encryptedBase64String, String outputPath) throws IOException {
-        try {
-            String decryptedBase64 = AESUtils.decrypt(secretKey, encryptedBase64String, true);
-            // Decode the Base64 string to bytes
-            byte[] imageBytes = Base64.getDecoder().decode(decryptedBase64);
-            // Write the image to a file
-            try (FileOutputStream outputStream = new FileOutputStream(outputPath)) {
-                FileCopyUtils.copy(imageBytes, outputStream);
-            }
-        } catch (IOException e) {
-            throw new IOException("Error converting Base64 to image: " + e.getMessage());
-        }
     }
 
     public void deleteFile(String filePath, String tenantId) {
