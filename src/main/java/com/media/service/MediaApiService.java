@@ -188,6 +188,10 @@ public class MediaApiService {
     }
 
     public void deleteFolder(String tenantId) {
+        if (org.apache.commons.lang3.StringUtils.isBlank(tenantId)) {
+            log.error("Cannot delete null folder");
+            return;
+        }
         File folder;
         String tenantFolder = File.separator + tenantId;
         folder = new File(ROOT_DIRECTORY + MediaConstant.DIRECTORY_TENANT + tenantFolder);

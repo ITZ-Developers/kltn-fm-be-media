@@ -104,4 +104,13 @@ public class FileController extends ABasicController {
         apiMessageDto.setMessage("Delete list file success");
         return apiMessageDto;
     }
+
+    @DeleteMapping(value = "/delete-folder/{tenantId}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ApiMessageDto<String> deleteFolder(HttpServletRequest request, @PathVariable("tenantId") String tenantId) {
+        httpService.validateInternalRequest(request);
+        mediaApiService.deleteFolder(tenantId);
+        ApiMessageDto<String> apiMessageDto = new ApiMessageDto<>();
+        apiMessageDto.setMessage("Delete folder tenant success");
+        return apiMessageDto;
+    }
 }
