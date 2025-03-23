@@ -43,7 +43,7 @@ public class AESUtils {
                 return Base64.getEncoder().encodeToString(outputBytes);
             }
         } catch (Exception  ex) {
-            log.error(ex.getMessage(),ex);
+//            log.error(ex.getMessage(),ex);
         }
         return null;
     }
@@ -70,7 +70,7 @@ public class AESUtils {
                 return new String(utf8, StandardCharsets.UTF_8);
             }
         } catch (Exception e) {
-            log.error(e.getMessage(),e);
+//            log.error(e.getMessage(),e);
         }
         return null;
     }
@@ -86,7 +86,7 @@ public class AESUtils {
             return keyGen.generateKey();
         } catch (final NoSuchAlgorithmException e) {
             // AES functionality is a requirement for any Java SE runtime
-            log.error(e.getMessage(),e);
+//            log.error(e.getMessage(),e);
             return null;
         }
     }
@@ -117,7 +117,7 @@ public class AESUtils {
             return  new SecretKeySpec(keyData, "AES");
         } catch (final NoSuchAlgorithmException e) {
             // AES functionality is a requirement for any Java SE runtime
-            log.error(e.getMessage(),e);
+//            log.error(e.getMessage(),e);
             return null;
         }
     }

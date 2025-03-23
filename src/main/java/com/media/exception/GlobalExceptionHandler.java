@@ -29,7 +29,6 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     final ObjectMapper mapper = new ObjectMapper();
     @ExceptionHandler({NotFoundException.class})
     public ResponseEntity<ApiMessageDto<String>> globalExceptionHandler(NotFoundException ex) {
-        log.error(""+ex.getMessage(), ex);
         ApiMessageDto<String> apiMessageDto = new ApiMessageDto<>();
         apiMessageDto.setCode("ERROR");
         apiMessageDto.setResult(false);
@@ -59,7 +58,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 	@ExceptionHandler(Exception.class)
 	@ResponseBody
 	public ApiMessageDto<List<ErrorForm>> exceptionHandler(Exception ex) {
-        log.error(""+ex.getMessage(), ex);
+//        log.error(""+ex.getMessage(), ex);
 		ApiMessageDto<List<ErrorForm>> apiMessageDto = new ApiMessageDto<>();
 		apiMessageDto.setCode("ERROR");
 		apiMessageDto.setResult(false);

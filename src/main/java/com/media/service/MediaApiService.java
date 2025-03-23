@@ -91,7 +91,7 @@ public class MediaApiService {
             apiMessageDto.setData(uploadFileDto);
             apiMessageDto.setMessage("Upload file success");
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
+//            log.error(e.getMessage(), e);
             apiMessageDto.setResult(false);
             apiMessageDto.setMessage(e.getMessage());
         }
@@ -138,7 +138,7 @@ public class MediaApiService {
             apiMessageDto.setMessage("Upload file success");
 
         } catch (IOException e) {
-            log.error(e.getMessage(), e);
+//            log.error(e.getMessage(), e);
             apiMessageDto.setResult(false);
             apiMessageDto.setMessage(e.getMessage());
         }

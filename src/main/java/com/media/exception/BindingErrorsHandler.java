@@ -43,7 +43,7 @@ public class BindingErrorsHandler {
                             String json = mapper.writeValueAsString(errorForms);
                             throw new MyBindingException(json);
                         } catch (JsonProcessingException jPE) {
-                            log.error(jPE.getMessage(), jPE);
+//                            log.error(jPE.getMessage(), jPE);
                         }
                     }
                 });

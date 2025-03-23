@@ -65,25 +65,12 @@ public class LogInterceptor implements HandlerInterceptor {
                 return false;
             }
         }
-        long startTime = System.currentTimeMillis();
-        request.setAttribute("startTime", startTime);
-        log.info("Starting call url: [" + getUrl(request) + "]");
         return true;
     }
 
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
         HandlerInterceptor.super.afterCompletion(request, response, handler, ex);
-
-        long startTime = (Long) request.getAttribute("startTime");
-        long endTime = System.currentTimeMillis();
-        long executeTime = endTime - startTime;
-        log.debug("Complete [" + getUrl(request) + "] executeTime : " + executeTime + "ms");
-
-        if (ex != null) {
-            log.info("afterCompletion>> " + ex.getMessage());
-
-        }
     }
 
     /**
