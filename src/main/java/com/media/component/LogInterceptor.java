@@ -34,12 +34,8 @@ public class LogInterceptor implements HandlerInterceptor {
                              Object handler) throws IOException {
         if (DispatcherType.REQUEST.name().equals(request.getDispatcherType().name())
                 && request.getMethod().equals(HttpMethod.GET.name())) {
-            loggingService.logRequest(request, null);
         }
         String tenantName = request.getHeader("X-tenant");
-        long startTime = System.currentTimeMillis();
-        request.setAttribute("startTime", startTime);
-        log.info("Starting call url: [" + getUrl(request) + "]");
         if (StringUtils.isNotBlank(tenantName)) {
             String tenantInfo = userService.getTenantInfo();
             Integer userKind = userService.getUserKind();
@@ -69,6 +65,9 @@ public class LogInterceptor implements HandlerInterceptor {
                 return false;
             }
         }
+        long startTime = System.currentTimeMillis();
+        request.setAttribute("startTime", startTime);
+        log.info("Starting call url: [" + getUrl(request) + "]");
         return true;
     }
 

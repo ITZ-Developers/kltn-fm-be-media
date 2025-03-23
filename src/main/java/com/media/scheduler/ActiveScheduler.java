@@ -15,11 +15,13 @@ public class ActiveScheduler {
     @Value("${app.url}")
     private String url;
 
-    @Scheduled(fixedRate = 10 * 60 * 1000, zone = "UTC") // 10 minutes
+    @Scheduled(fixedRate = 2 * 60 * 1000, zone = "UTC") // 2 minutes
     public void handleActive() {
         try {
             restTemplate.getForEntity(url, String.class);
-        } catch (Exception ignored) {}
-        log.error("GET request sent to {}", url);
+            log.info("GET request sent to {}", url);
+        } catch (Exception e) {
+            log.error("Failed to send GET request to {}: {}", url, e.getMessage());
+        }
     }
 }
