@@ -32,15 +32,18 @@ import java.util.List;
 
 @Configuration
 @CrossOrigin
-@EnableWebMvc
 @EnableAsync
 @Slf4j
 public class WebMvcConfig implements WebMvcConfigurer {
     private static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_TIME_FORMAT = "dd/MM/yyyy HH:mm:ss";
-
     @Autowired
     LogInterceptor logInterceptor;
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/web-rtc").setViewName("forward:/index.html");
+    }
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {

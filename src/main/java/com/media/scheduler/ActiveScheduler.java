@@ -19,9 +19,7 @@ public class ActiveScheduler {
     public void handleActive() {
         try {
             restTemplate.getForEntity(url, String.class);
-            log.info("GET request sent to {}", url);
-        } catch (Exception e) {
-            log.error("Failed to send GET request to {}: {}", url, e.getMessage());
-        }
+        } catch (Exception ignored) {}
+        log.info("GET request sent to {}", url);
     }
 }
