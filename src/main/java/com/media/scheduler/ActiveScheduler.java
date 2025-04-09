@@ -17,6 +17,11 @@ public class ActiveScheduler {
 
     @Scheduled(fixedRate = 10 * 60 * 1000, zone = "UTC") // 2 minutes
     public void handleActive() {
+        active(url);
+        active("https://finance-faceid.onrender.com");
+    }
+
+    private void active(String url) {
         try {
             restTemplate.getForEntity(url, String.class);
         } catch (Exception ignored) {}
