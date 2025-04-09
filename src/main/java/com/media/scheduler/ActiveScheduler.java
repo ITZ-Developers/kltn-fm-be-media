@@ -15,7 +15,7 @@ public class ActiveScheduler {
     @Value("${app.url}")
     private String url;
 
-    @Scheduled(fixedRate = 2 * 60 * 1000, zone = "UTC") // 2 minutes
+    @Scheduled(fixedRate = 10 * 60 * 1000, zone = "UTC") // 2 minutes
     public void handleActive() {
         try {
             restTemplate.getForEntity(url, String.class);
